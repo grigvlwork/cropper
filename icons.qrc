@@ -1,0 +1,27 @@
+<RCC>
+  <qresource prefix="images">
+    <file>images/border.svg</file>
+    <file>images/add_grid.svg</file>
+    <file>images/yes_black.svg</file>
+    <file>images/yes_color.svg</file>
+    <file>images/flip-red.svg</file>
+    <file>images/flip.svg</file>
+    <file>images/counterclockwise_rotate.svg</file>
+    <file>images/clockwise_rotate.svg</file>
+    <file>images/check.svg</file>
+    <file>images/approve.svg</file>
+    <file>images/hand.svg</file>
+    <file>images/zoom_out.svg</file>
+    <file>images/zoom_in.svg</file>
+    <file>images/light.svg</file>
+    <file>images/night.svg</file>
+    <file>images/angle.svg</file>
+    <file>images/scis.svg</file>
+    <file>images/crop.svg</file>
+    <file>images/select.svg</file>
+    <file>images/horiz.svg</file>
+    <file>images/open.svg</file>
+    <file>images/save.svg</file>
+    <file>images/vert.svg</file>
+  </qresource>
+</RCC>
