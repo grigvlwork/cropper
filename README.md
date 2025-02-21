@@ -77,6 +77,6 @@ Email: grigvlwork@gmail.com
 ## Благодарности
 Огромное спасибо всем, кто помогал в разработке этого проекта! Особую благодарность выражаем следующим проектам и библиотекам:
 
-[Python](https://www.python.org/)
-[PyQt6](https://pypi.org/project/PyQt6/)
-[OpenCV](https://opencv.org/)
+- [Python](https://www.python.org/)
+- [PyQt6](https://pypi.org/project/PyQt6/)
+- [OpenCV](https://opencv.org/)
