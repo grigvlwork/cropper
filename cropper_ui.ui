@@ -323,7 +323,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>images/add_vertical.svg</normaloff>images/add_vertical.svg</iconset>
+          <normaloff>images/vertical_cut.svg</normaloff>images/vertical_cut.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -349,7 +349,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>images/add_horizontal.svg</normaloff>images/add_horizontal.svg</iconset>
+          <normaloff>images/horizontal_cut.svg</normaloff>images/horizontal_cut.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -375,7 +375,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>images/delete cuts.svg</normaloff>images/delete cuts.svg</iconset>
+          <normaloff>images/delete_cuts.svg</normaloff>images/delete_cuts.svg</iconset>
         </property>
         <property name="iconSize">
          <size>

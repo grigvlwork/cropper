@@ -617,7 +617,6 @@ class ImageViewer(QGraphicsView):
 
     def mouseMoveEvent(self, event):
         self.pos = event.scenePosition()
-        print(self.pos)
         if self.current_action is None:
             return
         if self.current_action.final:
