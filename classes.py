@@ -464,11 +464,6 @@ class ImageViewer(QGraphicsView):
 
     def contour(self):
         rectangles = self.contouring(self.image_path)
-        # scaled_pixmap = self.pixmap.scaled(self.container_width, self.container_height,
-        #                                    transformMode=Qt.SmoothTransformation,
-        #                                    aspectRatioMode=Qt.KeepAspectRatio)
-        # self.pixmap_item = QGraphicsPixmapItem(scaled_pixmap)
-        # self.scene.addItem(self.pixmap_item)
         self.current_action = Action(type='letter_select', value=rectangles, final=False)
         self.apply_action()
         self.add_action()
@@ -609,39 +604,39 @@ class ImageViewer(QGraphicsView):
             self.mouse_press_pos = None
             return
         if event.button() == Qt.MouseButton.LeftButton and (self.current_step in (0, 1, 3, 4)):
-            self.mouse_press_pos = event.pos()
+            self.mouse_press_pos = QPointF(event.pos())
             self.right_btn = False
         if event.button() == Qt.MouseButton.RightButton and self.current_step == 3:
-            self.mouse_press_pos = event.pos()
+            self.mouse_press_pos = QPointF(event.pos())
             self.right_btn = True
 
     def mouseMoveEvent(self, event):
-        self.pos = event.scenePosition()
+        self.pos = QPointF(event.scenePosition())
         if self.current_action is None:
             return
         if self.current_action.final:
             self.mouse_press_pos = None
             return
         if self.mouse_press_pos is not None and (self.current_step in (0, 1)):
-            new_pos = self.line.pos()
+            new_pos = QPointF(self.line.pos())
             if self.current_step == 0:  # Вертикальный разрез
-                delta = event.pos() - self.mouse_press_pos
+                delta = QPointF(event.pos()) - self.mouse_press_pos
                 delta.setY(0)
                 new_pos += delta
             elif self.current_step == 1:  # Горизонтальный разрез, настройка угла
-                delta = event.pos() - self.mouse_press_pos
+                delta = QPointF(event.pos()) - self.mouse_press_pos
                 delta.setX(0)
                 new_pos += delta
             self.line.setPos(new_pos)
-            self.mouse_press_pos = event.pos()
+            self.mouse_press_pos = QPointF(event.pos())
         elif self.mouse_press_pos is not None and self.current_step == 4:
-            new_pos = self.grid.pos()
+            new_pos = QPointF(self.grid.pos())
             delta = event.pos() - self.mouse_press_pos
             new_pos += delta
             self.grid.setPos(new_pos)
-            self.mouse_press_pos = event.pos()
+            self.mouse_press_pos = QPointF(event.pos())
         elif self.mouse_press_pos is not None and self.current_step == 3:
-            delta = event.pos() - self.mouse_press_pos
+            delta = QPointF(event.pos()) - self.mouse_press_pos
             if not self.right_btn:
                 self.angle += delta.x() * DELTA_ANGLE
                 self.pixmap_item.setRotation(self.angle)
@@ -650,7 +645,7 @@ class ImageViewer(QGraphicsView):
                 delta.setX(0)
                 new_pos += delta
                 self.rotation_line.setPos(new_pos)
-            self.mouse_press_pos = event.pos()
+            self.mouse_press_pos = QPointF(event.pos())
         elif self.current_step == 5:
             pos = QPointF(event.scenePosition())
             for i, rect in enumerate(self.borders):
