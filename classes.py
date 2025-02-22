@@ -425,8 +425,8 @@ class ImageViewer(QGraphicsView):
             self.scene.removeItem(self.pixmap_item)
             self.pixmap = pil2pixmap(rotated_image)
             scaled_pixmap = self.pixmap.scaled(self.container_width, self.container_height,
-                                               transformMode=Qt.SmoothTransformation,
-                                               aspectRatioMode=2)
+                                               transformMode=Qt.TransformationMode.SmoothTransformation,
+                                               aspectRatioMode=Qt.AspectRatioMode.KeepAspectRatio)
             self.pixmap_item = QGraphicsPixmapItem(scaled_pixmap)
             self.scene.addItem(self.pixmap_item)
         elif self.current_action.type == 'rotation':
@@ -435,8 +435,8 @@ class ImageViewer(QGraphicsView):
             self.scene.removeItem(self.pixmap_item)
             self.pixmap = pil2pixmap(rotated_image)
             scaled_pixmap = self.pixmap.scaled(self.container_width, self.container_height,
-                                               transformMode=Qt.SmoothTransformation,
-                                               aspectRatioMode=2)
+                                               transformMode=Qt.TransformationMode.SmoothTransformation,
+                                               aspectRatioMode=Qt.AspectRatioMode.KeepAspectRatio)
             self.pixmap_item = QGraphicsPixmapItem(scaled_pixmap)
             self.scene.addItem(self.pixmap_item)
         elif self.current_action.type == 'word_select':
@@ -509,8 +509,8 @@ class ImageViewer(QGraphicsView):
             self.scene.removeItem(self.pixmap_item)
             self.pixmap = pil2pixmap(rotated_image)
             scaled_pixmap = self.pixmap.scaled(self.container_width, self.container_height,
-                                               transformMode=Qt.SmoothTransformation,
-                                               aspectRatioMode=2)
+                                               transformMode=Qt.TransformationMode.SmoothTransformation,
+                                               aspectRatioMode=Qt.AspectRatioMode.KeepAspectRatio)
             self.pixmap_item = QGraphicsPixmapItem(scaled_pixmap)
             self.scene.addItem(self.pixmap_item)
             self.current_action = Action(type='orientation', value=180, final=True)
@@ -662,26 +662,27 @@ class ImageViewer(QGraphicsView):
             self.mouse_press_pos = None
             return
         if event.button() == Qt.MouseButton.LeftButton and (self.current_step in (0, 1, 3, 4)):
+            scene_pos = self.mapToScene(event.pos()).toPoint()
+            item_pos = self.itemAt(scene_pos)
             self.current_action = None
             if self.current_step == 0:  # Вертикальный разрез
-                pos_in_original_image = QPointF(
-                    (self.container_width // 2 + self.line.pos().x()) * self.scale_x,
-                    (0 + self.line.pos().y()) * self.scale_y
-                )
-                self.current_action = Action(type='vertical_cut',
-                                             value=int(pos_in_original_image.x()),
-                                             final=False)
+                if isinstance(item_pos, QGraphicsPixmapItem):
+                    pixmap_pos = item_pos.mapFromScene(QPointF(scene_pos))
+                    pos_in_original_image = QPointF(pixmap_pos.x() * self.scale_x,
+                                                    pixmap_pos.y() * self.scale_y)
+                    self.current_action = Action(type='vertical_cut',
+                                                 value=int(pos_in_original_image.x()),
+                                                 final=False)
             elif self.current_step == 1:  # Горизонтальный разрез
-                pos_in_original_image = QPointF(
-                    (0 + self.line.pos().x()) * self.scale_x,
-                    (self.pixmap_item.pixmap().height() // 2 + self.line.pos().y()) * self.scale_y
-                )
+                pixmap_pos = item_pos.mapFromScene(QPointF(scene_pos))
+                pos_in_original_image = QPointF(pixmap_pos.x() * self.scale_x,
+                                                pixmap_pos.y() * self.scale_y)
                 self.current_action = Action(type='horizontal_cut',
                                              value=int(pos_in_original_image.y()),
                                              final=False)
             elif self.current_step == 3:
                 if not self.right_btn:
-                    delta = event.pos() - self.mouse_press_pos
+                    delta = QPointF(event.pos()) - self.mouse_press_pos
                     self.angle += delta.x() * DELTA_ANGLE
                     self.current_action = Action(type='rotation',
                                                  value=self.angle,
@@ -694,4 +695,4 @@ class ImageViewer(QGraphicsView):
                                              value=(pos_in_original_image.x(), pos_in_original_image.y()),
                                              final=False)
             self.add_action()
-            self.mouse_press_pos = None
+        self.mouse_press_pos = None

@@ -372,8 +372,8 @@ class MyWidget(QMainWindow, Ui_MainWindow):
         if not all(check_list):
             reply = QMessageBox.question(None, 'Переход на следующий этап',
                                          'Будут обработаны только отмеченные файлы, пометить все файлы перед переходом?',
-                                         QMessageBox.Yes | QMessageBox.No,
-                                         QMessageBox.Yes)
+                                         QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+                                         QMessageBox.StandardButton.Yes)
 
             if reply == QMessageBox.Yes:
                 self.check_all()
