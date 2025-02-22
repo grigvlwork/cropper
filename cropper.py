@@ -23,6 +23,7 @@ import os
 
 import sys
 # import qdarkstyle
+import qdarktheme
 import traceback
 
 from PyQt6 import QtGui, QtCore
@@ -59,7 +60,7 @@ class MyWidget(QMainWindow, Ui_MainWindow):
             "flip": self.flip_btn,
             "rotate": self.rotate_btn,
             "add_grid": self.add_grid_btn,
-            "contour":self.contour_btn,
+            "contour": self.contour_btn,
             "confirm_btn": self.confirm_btn,
             "add_vertical_cut": self.add_vertical_cut_btn,
             "add_horizontal_cut": self.add_horizontal_cut_btn,
@@ -68,7 +69,9 @@ class MyWidget(QMainWindow, Ui_MainWindow):
             # "angle_btn": self.angle_btn,
             "previous": self.previous_btn,
             "next": self.next_btn,
-            "word_edit":self.word_le
+            "word_edit": self.word_le,
+            "add_contour": self.add_contour_btn,
+            "del_contour": self.del_contour_btn
         }
         self.step_buttons = {
             "start": ["new_project", "open"],
@@ -83,7 +86,8 @@ class MyWidget(QMainWindow, Ui_MainWindow):
             "word_select": ["new_project", "open", "save", "check_all",
                             "add_grid", "delete_cut", "confirm_btn", "previous", "next"],
             "letter_select": ["new_project", "open", "save", "check_all",
-                              "contour", "delete_cut", "confirm_btn", "previous", "next", "word_edit"]
+                              "contour", "add_contour", "del_contour", "confirm_btn", "previous",
+                              "next", "word_edit"],
         }
         # self.theme_btn.clicked.connect(self.change_theme)
         self.open_btn.clicked.connect(self.open_folder)
@@ -361,7 +365,7 @@ class MyWidget(QMainWindow, Ui_MainWindow):
         image.save(file, format='JPEG')
         thumbnail = self.labels[index]
         pix = pil2pixmap(image)
-        thumbnail.setPixmap(pix.scaled(200, 400, QtCore.Qt.KeepAspectRatio))
+        thumbnail.setPixmap(pix.scaled(200, 400, QtCore.Qt.AspectRatioMode.KeepAspectRatio))
 
     def next_step(self):
         check_list = [x.isChecked() for x in self.check_list]
@@ -481,7 +485,8 @@ def excepthook(exc_type, exc_value, exc_tb):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    app.setStyle('Fusion')
+    # qdarktheme.setup_theme()
+    # app.setStyle('Fusion')
     ex = MyWidget()
     sys.excepthook = excepthook
     # app.setStyleSheet(qdarkstyle.load_stylesheet(qt_api='pyqt5', palette=qdarkstyle.DarkPalette))
