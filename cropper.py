@@ -23,7 +23,7 @@ import os
 
 import sys
 # import qdarkstyle
-import qdarktheme
+# import qdarktheme
 import traceback
 
 from PyQt6 import QtGui, QtCore
